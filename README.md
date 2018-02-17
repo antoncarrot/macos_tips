@@ -45,6 +45,7 @@ appcleaner
 flux
 iterm2
 keepassxc
+mpv
 oversight
 sublime-text
 torbrowser
