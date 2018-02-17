@@ -54,8 +54,10 @@ virtualbox
 
 ### NFS server config
 
+```
 config file - /etc/exports
-<dir> - from root
+<dir> - path from root
+```
 
 ```bash
 <dir> -ro -mapall=<uid>:<gid> -network 10.0.3 -mask 255.255.255.0
