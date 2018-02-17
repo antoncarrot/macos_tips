@@ -53,6 +53,23 @@ transmission
 virtualbox
 ```
 
+### macports commands
+
+https://www.macports.org/ports.php
+
+```bash
+sudo port -v selfupdate
+port installed
+port outdated
+sudo port upgrade outdated
+sudo port clean –all installed
+sudo port clean –all all
+```
+```bash
+sudo port -f uninstall installed
+```
+
+
 ### NFS server config
 
 ```
