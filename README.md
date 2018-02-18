@@ -100,3 +100,12 @@ fi
 ```bash
 touch ~/.bash_sessions_disable
 ```
+
+### My fonts
+
+```bash
+/Users/Your_Username/Library/Fonts
+```
+```bash
+https://design.ubuntu.com/font/
+```
