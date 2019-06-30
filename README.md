@@ -106,6 +106,12 @@ fi
 touch ~/.bash_sessions_disable
 ```
 
+### Mount NFS via terminal
+
+```bash
+open smb://<ip>/<name>
+```
+
 ### My fonts
 
 ```bash
