@@ -20,7 +20,6 @@ brew update
 brew upgrade
 brew cu -a
 brew cleanup -s
-brew cask cleanup
 ```
 
 ### My brew list
@@ -42,15 +41,17 @@ brew cask list | column -t
 
 ```
 appcleaner
-flux
+coconutbattery
+dropbox
+firefox
 iterm2
 keepassxc
-mpv
+marta
 oversight
 sublime-text
-torbrowser
 transmission
 virtualbox
+vlc
 ```
 
 ### macports commands
@@ -63,8 +64,8 @@ applications_dir /opt/local/Library/Applications/MacPorts
 ```
 ```bash
 sudo port -v selfupdate
-port installed
-port outdated
+sudo port installed
+sudo port outdated
 sudo port upgrade outdated
 sudo port clean --all installed
 sudo port clean --all all
