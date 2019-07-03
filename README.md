@@ -6,11 +6,10 @@
 xcode-select --install
 ```
 
-### Install brew and extras
+### brew extras
 
 ```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew tap buo/cask-upgrade
+?brew tap buo/cask-upgrade
 ```
 
 ### brew commands
@@ -18,8 +17,10 @@ brew tap buo/cask-upgrade
 ```bash
 brew update
 brew upgrade
-brew cu -a
 brew cleanup -s
+
+brew cask outdated --greedy
+brew cask upgrade --greedy
 ```
 
 ### My brew list
@@ -43,7 +44,6 @@ brew cask list | column -t
 appcleaner
 coconutbattery
 dropbox
-firefox
 iterm2
 keepassxc
 marta
@@ -51,6 +51,7 @@ oversight
 sublime-text
 transmission
 virtualbox
+visual-studio-code
 vlc
 ```
 
@@ -62,6 +63,7 @@ https://www.macports.org/ports.php
 sudo vim /opt/local/etc/macports/macports.conf
 applications_dir /opt/local/Library/Applications/MacPorts
 ```
+
 ```bash
 sudo port -v selfupdate
 sudo port installed
@@ -118,5 +120,6 @@ open smb://<ip>/<name>
 /Users/Your_Username/Library/Fonts
 ```
 ```bash
+https://dejavu-fonts.github.io
 https://design.ubuntu.com/font/
 ```
