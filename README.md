@@ -61,7 +61,7 @@ https://www.macports.org/ports.php
 
 ```bash
 sudo vim /opt/local/etc/macports/macports.conf
-applications_dir /opt/local/Library/Applications/MacPorts
+applications_dir /opt/local/Applications/MacPorts
 ```
 
 ```bash
@@ -100,6 +100,8 @@ sudo tmutil disable localsnapshot
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   source $(brew --prefix)/etc/bash_completion
 fi
+# for macports
+PATH=/opt/local/bin:/opt/local/sbin:$PATH
 ```
 
 ### Disable bash session files
