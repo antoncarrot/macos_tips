@@ -102,6 +102,8 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 # for macports
 PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# for python
+PATH=$PATH:~/Library/Python/3.6/bin
 ```
 
 ### Disable bash session files
@@ -124,4 +126,13 @@ open smb://<ip>/<name>
 ```bash
 https://dejavu-fonts.github.io
 https://design.ubuntu.com/font/
+```
+
+### Python
+
+```bash
+/opt/local/bin/python3 -m pip install -U pylint --user
+/opt/local/bin/python3 -m pip install -U flake8 --user
+/opt/local/bin/python3 -m pip install -U pep8 --user
+/opt/local/bin/python3 -m pip install -U autopep8 --user
 ```
