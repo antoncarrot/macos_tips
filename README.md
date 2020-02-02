@@ -126,6 +126,7 @@ open smb://<ip>/<name>
 ```bash
 https://dejavu-fonts.github.io
 https://design.ubuntu.com/font/
+https://www.jetbrains.com/lp/mono/
 ```
 
 ### Python
