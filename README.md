@@ -1,4 +1,4 @@
-# macOS (High Sierra) tips
+# macOS tips
 
 ### Install Command Line Tools
 
@@ -32,6 +32,7 @@ brew list | column -t
 ```
 bash-completion
 brew-cask-completion
+coreutils
 ```
 
 ### My brew cask list
@@ -76,7 +77,6 @@ sudo port clean --all all
 sudo port -f uninstall installed
 ```
 
-
 ### NFS server config
 
 ```
@@ -94,6 +94,12 @@ config file - /etc/exports
 sudo tmutil disable localsnapshot
 ```
 
+### Set bash
+
+```bash
+chsh -s /bin/bash
+```
+
 ### My .bash_profile
 
 ```bash
@@ -104,6 +110,36 @@ fi
 PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # for python
 PATH=$PATH:~/Library/Python/3.6/bin
+```
+
+### .profile
+
+```bash
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export HOMEBREW_NO_ANALYTICS=1
+
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
+export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+if [ -x $(which dircolors) ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
 ```
 
 ### Disable bash session files
@@ -127,13 +163,4 @@ open smb://<ip>/<name>
 https://dejavu-fonts.github.io
 https://design.ubuntu.com/font/
 https://www.jetbrains.com/lp/mono/
-```
-
-### Python
-
-```bash
-/opt/local/bin/python3 -m pip install -U pylint --user
-/opt/local/bin/python3 -m pip install -U flake8 --user
-/opt/local/bin/python3 -m pip install -U pep8 --user
-/opt/local/bin/python3 -m pip install -U autopep8 --user
 ```
