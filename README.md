@@ -121,14 +121,19 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
 export HOMEBREW_NO_ANALYTICS=1
+
+if [ $(arch) == "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+#elif [ $(arch) == "i386" ]; then
+    #eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-
-export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 if [ -x $(which dircolors) ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -140,6 +145,11 @@ if [ -x $(which dircolors) ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+```
+
+```bash
+ln -s .profile .bash_profile
+ln -s .profile .bashrc
 ```
 
 ### Disable bash session files
