@@ -121,14 +121,17 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+ARCH=$(arch)
 
 export HOMEBREW_NO_ANALYTICS=1
 
-if [ $(arch) == "arm64" ]; then
+if [ $ARCH == "arm64" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
-#elif [ $(arch) == "i386" ]; then
-    #eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ $ARCH == "i386" ]; then
+    export PS1="\[\033[01;31m\]$ARCH\[\033[00m\] $PS1"
+    eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
