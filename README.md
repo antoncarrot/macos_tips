@@ -132,11 +132,57 @@ if [ $ARCH == "arm64" ]; then
 elif [ $ARCH == "i386" ]; then
     export PS1="\[\033[01;31m\]$ARCH\[\033[00m\] $PS1"
     eval "$(/usr/local/bin/brew shellenv)"
+
+    export PYENV_ROOT="$PWD/.pyenv_x86"
 fi
+
+BREW_LIST="$(brew list --formula --full-name -1)"
+
+CFLAGS=""
+LDFLAGS=""
+BIN_PATH=""
+
+for pkg in $BREW_LIST; do
+    PKG_PATH=$(brew --prefix $pkg)
+
+    PKG_H_PATH="$PKG_PATH/include"
+    PKG_LIB_PATH="$PKG_PATH/lib"
+
+    PKG_BIN_PATH="$PKG_PATH/bin"
+
+    if [ -d "$PKG_H_PATH" ]; then
+        if [ -z "$CFLAGS" ]; then
+            CFLAGS="-I$PKG_H_PATH"
+        else
+            CFLAGS="$CFLAGS -I$PKG_H_PATH"
+        fi
+    fi
+
+    if [ -d "$PKG_LIB_PATH" ]; then
+        if [ -z "$LDFLAGS" ]; then
+            LDFLAGS="-L$PKG_LIB_PATH"
+        else
+            LDFLAGS="$LDFLAGS -L$PKG_LIB_PATH"
+        fi
+    fi
+
+    if [ -d "$PKG_BIN_PATH" ]; then
+        if [ -z "$BIN_PATH" ]; then
+            BIN_PATH="$PKG_BIN_PATH"
+        else
+            BIN_PATH="$BIN_PATH:$PKG_BIN_PATH"
+        fi
+    fi
+done
+
+export LDFLAGS=$LDFLAGS
+export CFLAGS=$CFLAGS
+export CPPFLAGS=$CFLAGS
+export PATH="$PATH:$BIN_PATH"
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
-PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+PATH="$PATH:/opt/homebrew/opt/coreutils/libexec/gnubin"
 
 if [ -x $(which dircolors) ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -150,9 +196,16 @@ if [ -x $(which dircolors) ]; then
 fi
 ```
 
-```bash
-ln -s .profile .bash_profile
-ln -s .profile .bashrc
+### Fake uname to avoid unknown arch error
+
+```
+#!/bin/sh
+
+if [[ "$@" == "-m" ]]; then
+    echo "aarch64"
+else
+    /usr/bin/uname $@
+fi
 ```
 
 ### Disable bash session files
