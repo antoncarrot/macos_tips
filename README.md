@@ -133,7 +133,7 @@ elif [ $ARCH == "i386" ]; then
     export PS1="\[\033[01;31m\]$ARCH\[\033[00m\] $PS1"
     eval "$(/usr/local/bin/brew shellenv)"
 
-    export PYENV_ROOT="$PWD/.pyenv_x86"
+    export PYENV_ROOT="$HOME/.pyenv_x86"
 fi
 
 BREW_LIST="$(brew list --formula --full-name -1)"
@@ -198,13 +198,29 @@ fi
 
 ### Fake uname to avoid unknown arch error
 
-```
+```bash
 #!/bin/sh
 
 if [[ "$@" == "-m" ]]; then
-    echo "aarch64"
+    if [ $(arch) == "arm64" ]; then
+        echo "aarch64"
+    else
+        echo "x86_64"
+    fi
 else
     /usr/bin/uname $@
+fi
+```
+
+### Arch runner
+
+```bash
+#!/bin/sh
+
+if [ -z "$ARCHPREFERENCE" ]; then
+   eval $@
+else
+   /usr/bin/arch $@
 fi
 ```
 
