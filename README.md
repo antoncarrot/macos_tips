@@ -100,29 +100,9 @@ sudo tmutil disable localsnapshot
 chsh -s /bin/bash
 ```
 
-### My .bash_profile
-
-```bash
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  source $(brew --prefix)/etc/bash_completion
-fi
-# for macports
-PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# for python
-PATH=$PATH:~/Library/Python/3.6/bin
-```
-
 ### .profile
 
 ```bash
-HISTCONTROL=ignoreboth
-shopt -s histappend
-
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
 ARCH=$(arch)
 
 export HOMEBREW_NO_ANALYTICS=1
@@ -130,13 +110,12 @@ export HOMEBREW_NO_ANALYTICS=1
 if [ $ARCH == "arm64" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [ $ARCH == "i386" ]; then
-    export PS1="\[\033[01;31m\]$ARCH\[\033[00m\] $PS1"
     eval "$(/usr/local/bin/brew shellenv)"
 
     export PYENV_ROOT="$HOME/.pyenv_x86"
 fi
 
-BREW_LIST="$(brew list --formula --full-name -1)"
+BREW_LIST="$(brew list --formula --full-name -1 | sed 's/openssl@3//g')"
 
 CFLAGS=""
 LDFLAGS=""
@@ -175,14 +154,41 @@ for pkg in $BREW_LIST; do
     fi
 done
 
+PATH="$PATH:/opt/homebrew/opt/coreutils/libexec/gnubin"
+
 export LDFLAGS=$LDFLAGS
 export CFLAGS=$CFLAGS
 export CPPFLAGS=$CFLAGS
 export PATH="$PATH:$BIN_PATH"
 
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+if [ $ARCH == "i386" ]; then
+    export ORACLE_HOME="$HOME/oracle/instantclient_19_8"
+fi
 
-PATH="$PATH:/opt/homebrew/opt/coreutils/libexec/gnubin"
+
+if [ -f $HOME/.bashrc ]; then
+    . ~/.bashrc
+fi
+```
+
+### .bashrc
+
+```bash
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+ARCH=$(arch)
+
+if [ $ARCH == "i386" ]; then
+    export PS1="\[\033[01;31m\]$ARCH\[\033[00m\] $PS1"
+fi
+
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 if [ -x $(which dircolors) ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -201,26 +207,10 @@ fi
 ```bash
 #!/bin/sh
 
-if [[ "$@" == "-m" ]]; then
-    if [ $(arch) == "arm64" ]; then
-        echo "aarch64"
-    else
-        echo "x86_64"
-    fi
+if [ $(arch) == "arm64" ]; then
+    /usr/bin/uname "$@" | sed 's/arm64/aarch64/g' | sed 's/arm/aarch64/g'
 else
-    /usr/bin/uname $@
-fi
-```
-
-### Arch runner
-
-```bash
-#!/bin/sh
-
-if [ -z "$ARCHPREFERENCE" ]; then
-   eval $@
-else
-   /usr/bin/arch $@
+    /usr/bin/uname "$@"
 fi
 ```
 
