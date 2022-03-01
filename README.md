@@ -16,29 +16,61 @@ xcode-select --install
 
 ```bash
 brew update
-brew upgrade
+brew upgrade --formula
+brew upgrade --cask --greedy
 brew cleanup -s
-
-brew cask outdated --greedy
-brew cask upgrade --greedy
 ```
 
 ### My brew list
 
 ```bash
-brew list | column -t
+brew list --formula -1
 ```
 
 ```
+autoconf
 bash-completion
 brew-cask-completion
+c-ares
+ca-certificates
 coreutils
+gettext
+gmp
+jpeg
+krb5
+libcbor
+libev
+libevent
+libffi
+libfido2
+libidn2
+libpq
+libsodium
+libunistring
+m4
+mbedtls@2
+mysql-client
+ncurses
+openssl@1.1
+openssl@3
+pcre
+pkg-config
+pyenv
+readline
+shadowsocks-libev
+sqlite
+tmux
+utf8proc
+wget
+xz
+zlib
+zstd
 ```
 
 ### My brew cask list
 
 ```bash
-brew cask list | column -t
+brew list --cask -1
 ```
 
 ```
@@ -51,9 +83,6 @@ marta
 oversight
 sublime-text
 transmission
-virtualbox
-visual-studio-code
-vlc
 ```
 
 ### macports commands
