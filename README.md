@@ -6,12 +6,6 @@
 xcode-select --install
 ```
 
-### brew extras
-
-```bash
-?brew tap buo/cask-upgrade
-```
-
 ### brew commands
 
 ```bash
